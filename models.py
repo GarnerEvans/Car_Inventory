@@ -1,4 +1,12 @@
-
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+import uuid 
+from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
+from flask_login import LoginManager
+from flask_marshmallow import Marshmallow 
+import secrets
 
 
 login_manager = LoginManager()
@@ -40,3 +48,33 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f'User {self.email} has been added to the database'
+
+class Car(db.Model):
+    id = db.Column(db.String, primary_key = True)
+    make = db.Column(db.String(150), nullable = False)
+    model = db.Column(db.String(200))
+    year = db.Column(db.String(20))
+    color = db.Column(db.String(200))
+    car_token = db.Column(db.String, db.ForeignKey('user.token'), nullable = False)
+
+    def __init__(self,make,model,year,color,car_token, id = ''):
+        self.id = self.set_id()
+        self.make = make
+        self.model = model
+        self.year = year
+        self.color = color
+        self.car_token = car_token
+
+
+    def __repr__(self):
+        return f'The following car has been added to the inventory: {self.make}'
+
+    def set_id(self):
+        return (secrets.token_urlsafe())
+
+class CarSchema(ma.Schema):
+    class Meta:
+        fields = ['id', 'make','model','year', 'color']
+
+car_schema = CarSchema()
+cars_schema = CarSchema(many=True)

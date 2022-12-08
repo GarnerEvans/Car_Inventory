@@ -1,10 +1,10 @@
 from flask import Flask
 from config import Config
-from site.routes import site
-from authentication.routes import auth
+from .site.routes import site
+from .authentication.routes import auth
 from flask_cors import CORS
 from helpers import JSONEncoder
-from api.routes import api
+from .api.routes import api
 
 
 from flask_sqlalchemy import SQLAlchemy
