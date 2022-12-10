@@ -14,6 +14,7 @@ def signup():
         if request.method == 'POST' and form.validate_on_submit():
             email = form.email.data
             password = form.password.data
+            print(email, password)
 
             user = User(email, password = password)
 
