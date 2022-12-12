@@ -55,15 +55,15 @@ class Car(db.Model):
     model = db.Column(db.String(200))
     year = db.Column(db.String(20))
     color = db.Column(db.String(200))
-    car_token = db.Column(db.String, db.ForeignKey('user.token'), nullable = False)
+    user_token = db.Column(db.String, db.ForeignKey('user.token'), nullable = False)
 
-    def __init__(self,make,model,year,color,car_token, id = ''):
+    def __init__(self,make,model,year,color,user_token, id = ''):
         self.id = self.set_id()
         self.make = make
         self.model = model
         self.year = year
         self.color = color
-        self.car_token = car_token
+        self.user_token = user_token
 
 
     def __repr__(self):

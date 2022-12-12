@@ -4,9 +4,7 @@ from models import db, User, Car, car_schema, cars_schema
 
 api = Blueprint('api',__name__, url_prefix='/api')
 
-# @api.route('/getdata')
-# def getdata():
-#     return {'yee': 'haw'}
+
 
 @api.route('/cars', methods = ['POST'])
 @token_required
@@ -15,9 +13,9 @@ def create_car(current_user_token):
     model = request.json['model']
     year = request.json['year']
     color = request.json['color']
-    car_token = current_user_token.token
+    user_token = current_user_token.token
 
-    car = Car(make, model, year, color, car_token=car_token)
+    car = Car(make, model, year, color, user_token=user_token)
 
     db.session.add(car)
     db.session.commit()
